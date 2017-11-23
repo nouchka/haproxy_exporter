@@ -187,6 +187,7 @@ func NewExporter(uri string, selectedServerMetrics map[int]*prometheus.GaugeVec,
 			42: newFrontendMetric("http_requests_total", "Total of HTTP responses.", prometheus.Labels{"code": "4xx"}),
 			43: newFrontendMetric("http_requests_total", "Total of HTTP responses.", prometheus.Labels{"code": "5xx"}),
 			44: newFrontendMetric("http_requests_total", "Total of HTTP responses.", prometheus.Labels{"code": "other"}),
+			48: newFrontendMetric("http_responses_total", "Total HTTP requests.", nil),
 		},
 		backendMetrics: map[int]*prometheus.GaugeVec{
 			2:  newBackendMetric("current_queue", "Current number of queued requests not assigned to any server.", nil),
