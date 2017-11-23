@@ -170,6 +170,7 @@ func NewExporter(uri string, selectedServerMetrics map[int]*prometheus.GaugeVec,
 			Help:      "Number of errors while parsing CSV.",
 		}),
 		frontendMetrics: map[int]*prometheus.GaugeVec{
+                        10: newFrontendMetric("nginx_upstream_response_msecs_avg", "Fake", nil),
 			39: newFrontendMetric("nginx_responses_total", "Total of HTTP responses.", prometheus.Labels{"status_code": "1xx"}),
 			40: newFrontendMetric("nginx_responses_total", "Total of HTTP responses.", prometheus.Labels{"status_code": "2xx"}),
 			41: newFrontendMetric("nginx_responses_total", "Total of HTTP responses.", prometheus.Labels{"status_code": "3xx"}),
