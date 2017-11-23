@@ -23,7 +23,7 @@ import (
 )
 
 const (
-	namespace = "haproxy" // For Prometheus metrics.
+	namespace = "" // For Prometheus metrics.
 
 	// HAProxy 1.4
 	// # pxname,svname,qcur,qmax,scur,smax,slim,stot,bin,bout,dreq,dresp,ereq,econ,eresp,wretr,wredis,status,weight,act,bck,chkfail,chkdown,lastchg,downtime,qlimit,pid,iid,sid,throttle,lbtot,tracked,type,rate,rate_lim,rate_max,check_status,check_code,check_duration,hrsp_1xx,hrsp_2xx,hrsp_3xx,hrsp_4xx,hrsp_5xx,hrsp_other,hanafail,req_rate,req_rate_max,req_tot,cli_abrt,srv_abrt,
@@ -45,7 +45,7 @@ func newFrontendMetric(metricName string, docString string, constLabels promethe
 	return prometheus.NewGaugeVec(
 		prometheus.GaugeOpts{
 			Namespace:   namespace,
-			Name:        "frontend_" + metricName,
+			Name:        metricName,
 			Help:        docString,
 			ConstLabels: constLabels,
 		},
@@ -170,24 +170,12 @@ func NewExporter(uri string, selectedServerMetrics map[int]*prometheus.GaugeVec,
 			Help:      "Number of errors while parsing CSV.",
 		}),
 		frontendMetrics: map[int]*prometheus.GaugeVec{
-			4:  newFrontendMetric("current_sessions", "Current number of active sessions.", nil),
-			5:  newFrontendMetric("max_sessions", "Maximum observed number of active sessions.", nil),
-			6:  newFrontendMetric("limit_sessions", "Configured session limit.", nil),
-			7:  newFrontendMetric("connections_total", "Total number of connections.", nil),
-			8:  newFrontendMetric("bytes_in_total", "Current total of incoming bytes.", nil),
-			9:  newFrontendMetric("bytes_out_total", "Current total of outgoing bytes.", nil),
-			10: newFrontendMetric("requests_denied_total", "Total of requests denied for security.", nil),
-			12: newFrontendMetric("request_errors_total", "Total of request errors.", nil),
-			33: newFrontendMetric("current_session_rate", "Current number of sessions per second over last elapsed second.", nil),
-			34: newFrontendMetric("limit_session_rate", "Configured limit on new sessions per second.", nil),
-			35: newFrontendMetric("max_session_rate", "Maximum observed number of sessions per second.", nil),
-			39: newFrontendMetric("http_requests_total", "Total of HTTP responses.", prometheus.Labels{"code": "1xx"}),
-			40: newFrontendMetric("http_requests_total", "Total of HTTP responses.", prometheus.Labels{"code": "2xx"}),
-			41: newFrontendMetric("http_requests_total", "Total of HTTP responses.", prometheus.Labels{"code": "3xx"}),
-			42: newFrontendMetric("http_requests_total", "Total of HTTP responses.", prometheus.Labels{"code": "4xx"}),
-			43: newFrontendMetric("http_requests_total", "Total of HTTP responses.", prometheus.Labels{"code": "5xx"}),
-			44: newFrontendMetric("http_requests_total", "Total of HTTP responses.", prometheus.Labels{"code": "other"}),
-			48: newFrontendMetric("http_responses_total", "Total of HTTP responses.", prometheus.Labels{"code": "5xx"}),
+			39: newFrontendMetric("nginx_responses_total", "Total of HTTP responses.", prometheus.Labels{"status_code": "1xx"}),
+			40: newFrontendMetric("nginx_responses_total", "Total of HTTP responses.", prometheus.Labels{"status_code": "2xx"}),
+			41: newFrontendMetric("nginx_responses_total", "Total of HTTP responses.", prometheus.Labels{"status_code": "3xx"}),
+			42: newFrontendMetric("nginx_responses_total", "Total of HTTP responses.", prometheus.Labels{"status_code": "4xx"}),
+			43: newFrontendMetric("nginx_responses_total", "Total of HTTP responses.", prometheus.Labels{"status_code": "5xx"}),
+			44: newFrontendMetric("nginx_responses_total", "Total of HTTP responses.", prometheus.Labels{"status_code": "other"}),
 		},
 		backendMetrics: map[int]*prometheus.GaugeVec{
 			2:  newBackendMetric("current_queue", "Current number of queued requests not assigned to any server.", nil),
