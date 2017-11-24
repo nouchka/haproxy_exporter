@@ -37,7 +37,7 @@ const (
 
 var (
 	frontendLabelNames = []string{"frontend"}
-	backendLabelNames  = []string{"backend"}
+	backendLabelNames  = []string{"environment"}
 	serverLabelNames   = []string{"backend", "server"}
 )
 
@@ -170,14 +170,14 @@ func NewExporter(uri string, selectedServerMetrics map[int]*prometheus.GaugeVec,
 			Help:      "Number of errors while parsing CSV.",
 		}),
 		frontendMetrics: map[int]*prometheus.GaugeVec{
-			39: newFrontendMetric("nginx_responses_total", "Total of HTTP responses.", prometheus.Labels{"status_code": "1xx"}),
-			40: newFrontendMetric("nginx_responses_total", "Total of HTTP responses.", prometheus.Labels{"status_code": "2xx"}),
-			41: newFrontendMetric("nginx_responses_total", "Total of HTTP responses.", prometheus.Labels{"status_code": "3xx"}),
-			42: newFrontendMetric("nginx_responses_total", "Total of HTTP responses.", prometheus.Labels{"status_code": "4xx"}),
-			43: newFrontendMetric("nginx_responses_total", "Total of HTTP responses.", prometheus.Labels{"status_code": "5xx"}),
-			44: newFrontendMetric("nginx_responses_total", "Total of HTTP responses.", prometheus.Labels{"status_code": "other"}),
 		},
 		backendMetrics: map[int]*prometheus.GaugeVec{
+			39: newBackendMetric("nginx_responses_total", "Total of HTTP responses.", prometheus.Labels{"status_code": "1xx"}),
+			40: newBackendMetric("nginx_responses_total", "Total of HTTP responses.", prometheus.Labels{"status_code": "2xx"}),
+			41: newBackendMetric("nginx_responses_total", "Total of HTTP responses.", prometheus.Labels{"status_code": "3xx"}),
+			42: newBackendMetric("nginx_responses_total", "Total of HTTP responses.", prometheus.Labels{"status_code": "4xx"}),
+			43: newBackendMetric("nginx_responses_total", "Total of HTTP responses.", prometheus.Labels{"status_code": "5xx"}),
+			44: newBackendMetric("nginx_responses_total", "Total of HTTP responses.", prometheus.Labels{"status_code": "other"}),
 			61: newBackendMetric("nginx_upstream_response_msecs_avg", "Avg. HTTP total time for last 1024 successful connections.", nil),
 		},
 		serverMetrics: selectedServerMetrics,
